@@ -6,22 +6,41 @@ Artiscope is a python based ascii internet browser capable of rendering art from
 
 ![image](https://github.com/user-attachments/assets/bb35d689-9d4a-49d1-a516-6e8a018628ab)
 
+**install**
+===============
+
+To install Artiscope you need to run these commands.
+
+`git clone github.com/sirsru/Artiscope`
+
+`cd Artiscope`
+
+`pip install -r requirements.txt`
+
 
 **examples**
 ======================
 Here are some example websites being rendered.
-websites in this order, github.com, python.org
+websites in this order, github.com, python.org, newgrounds.com
 
 ***github***
 -------------------
 ![image](https://github.com/user-attachments/assets/2b1ccce0-c19d-492e-9aa5-fa0183bdd2c7)
-![image](https://github.com/user-attachments/assets/8d6ff521-10ab-4421-99a9-ac66324d0bba)
+![image](https://github.com/user-attachments/assets/eaa1fd75-92dd-4f68-928d-3ee7ae229ae7)
+
 
 
 ***python.org***
 ---------------------
-![image](https://github.com/user-attachments/assets/0afa7f72-e4cc-421e-bcaf-91649b764415)
-![image](https://github.com/user-attachments/assets/58154dd1-678f-45a9-a768-85f8b3f54d3c)
+![image](https://github.com/user-attachments/assets/4879321e-7eab-43c8-ac4b-12998aadbd1b)
+![image](https://github.com/user-attachments/assets/4363a0d5-f0a2-44d2-b398-aa235caff0e2)
+
+
+
+***newgrounds.com***
+---------------------
+![image](https://github.com/user-attachments/assets/13237c89-90a2-4e64-ab5f-372c1c82200f)
+
 
 **settings**
 ----------------------
