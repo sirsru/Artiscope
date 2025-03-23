@@ -46,7 +46,7 @@ websites in this order:
 
 To install Artiscope you need to run these commands.
 ```
-git clone github.com/sirsru/Artiscope
+git clone https://github.com/sirsru/Artiscope.git
 
 cd Artiscope
 
