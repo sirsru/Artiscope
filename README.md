@@ -5,7 +5,7 @@
 Artiscope is a python based ascii internet browser capable of rendering art from websites and allowing you to browse further through the website. This project is meant to be lightweight, with the ultimate goal being able to use a browser on a pi zero w at a fast speed!
 
 ![image](https://github.com/user-attachments/assets/bb35d689-9d4a-49d1-a516-6e8a018628ab)
-![image](https://github.com/user-attachments/assets/a6988a72-90f2-4a00-a6a3-75cd39645625)
+
 
 **examples**
 ======================
@@ -22,6 +22,12 @@ websites in this order, github.com, python.org
 ---------------------
 ![image](https://github.com/user-attachments/assets/0afa7f72-e4cc-421e-bcaf-91649b764415)
 ![image](https://github.com/user-attachments/assets/58154dd1-678f-45a9-a768-85f8b3f54d3c)
+
+**settings**
+----------------------
+The settings menu for Artiscope can be accessed from the main menu, in which you can change the ascii image resolution and size, allowed image formats, and similar image toggle.
+
+![image](https://github.com/user-attachments/assets/f04666f0-103f-4af8-baba-f788c8c8a40a)
 
 **How to use**
 ======================
