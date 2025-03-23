@@ -188,7 +188,7 @@ def scrape_and_convert_images(url, max_width=100):
 
 def display_settings_menu():
     print(f"\n{CYAN}Settings{RESET}")
-    print(f"1. {GREEN}Set maximum width for ASCII art ({settings['max_width']}){RESET}")
+    print(f"1. {GREEN}Set maximum width/resolution for ASCII art ({settings['max_width']}){RESET}")
     print(f"2. {GREEN}Toggle image similarity check ({'Enabled' if settings['check_similarity'] else 'Disabled'}){RESET}")
     print(f"3. {GREEN}Set allowed image formats ({', '.join(settings['allowed_formats'])}){RESET}")
     print(f"4. {RED}Back to main menu{RESET}")
