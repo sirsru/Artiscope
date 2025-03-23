@@ -58,7 +58,10 @@ python3 -m venv venv
 >*linux and macos*
 >`source venv/bin/activate`
 
-`pip install -r requirements.txt`
+```
+pip install -r requirements.txt
+python3 browser.py
+```
 
 **If you encounter any errors with installing python dependencies use the following**
 
