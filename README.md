@@ -24,8 +24,8 @@ websites in this order, github.com, python.org
 
 **How to use**
 ======================
-Go to link # - input a links number that was output earlier
+**Go to link #** - input a links number that was output earlier
 
-Enter another URL - enter a different URL
+**Enter another URL** - enter a different URL
 
-Go back to the Main Menu - goes back to the homescreen with settings and other options
+**Go back to the Main Menu** - goes back to the homescreen with settings and other options
