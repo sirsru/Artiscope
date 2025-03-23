@@ -45,16 +45,27 @@ websites in this order:
 ===============
 
 To install Artiscope you need to run these commands.
+```
+git clone github.com/sirsru/Artiscope
 
-`git clone github.com/sirsru/Artiscope`
+cd Artiscope
 
-`cd Artiscope`
+python3 -m venv venv
+```
+>*windows*
+>`venv\Scripts\activate`
+
+>*linux and macos*
+>`source venv/bin/activate`
 
 `pip install -r requirements.txt`
 
-in case you are getting an error while downloading the requirements, for example
-`
+**If you encounter any errors with installing python dependencies use the following**
 
+>`pip install requests`
+`pip install beautifulsoup4`
+`pip install Pillow`
+ 
 
 **settings**
 ----------------------
