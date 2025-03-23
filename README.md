@@ -52,6 +52,9 @@ To install Artiscope you need to run these commands.
 
 `pip install -r requirements.txt`
 
+in case you are getting an error while downloading the requirements, for example
+`
+
 
 **settings**
 ----------------------
