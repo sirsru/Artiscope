@@ -16,8 +16,14 @@ logo = '''
 https://github.com/sirsru/Artiscope
 '''
 
+def get_terminal_width():
+    try:
+        return os.get_terminal_size().columns
+    except OSError:
+        return 100
+
 settings = {
-    "max_width": 100,
+    "max_width": get_terminal_width(),
     "check_similarity": True,
     "allowed_formats": ["PNG", "JPEG", "GIF", "BMP", "TIFF", "WEBP"]
 }
@@ -30,11 +36,6 @@ def check_network():
     except requests.ConnectionError:
         return False
 
-def get_terminal_width():
-    try:
-        return os.get_terminal_size().columns
-    except OSError:
-        return 25
 
 RESET = "\033[0m"
 BOLD = "\033[1m"
@@ -80,7 +81,7 @@ def rgb_to_terminal_color(r, g, b):
             return WHITE
 
 
-def image_to_ascii(image_url, max_width=100, previous_image_hash=None):
+def image_to_ascii(image_url, max_width=settings['max_width'], previous_image_hash=None):
     try:
         response = requests.get(image_url)
         img = Image.open(io.BytesIO(response.content))
@@ -120,7 +121,7 @@ def image_to_ascii(image_url, max_width=100, previous_image_hash=None):
     return ascii_image, current_image_hash
 
 
-def scrape_and_convert_images(url, max_width=100):
+def scrape_and_convert_images(url, max_width=settings['max_width']):
     if not url.lower().startswith(('http://', 'https://')):
         url = 'https://' + url
 
