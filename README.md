@@ -14,3 +14,11 @@ python.org
 
 ![image](https://github.com/user-attachments/assets/0afa7f72-e4cc-421e-bcaf-91649b764415)
 ![image](https://github.com/user-attachments/assets/58154dd1-678f-45a9-a768-85f8b3f54d3c)
+
+***How to use***
+
+Go to link # - input a links number that was output earlier
+
+Enter another URL - enter a different URL
+
+Go back to the Main Menu - goes back to the homescreen with settings and other options
