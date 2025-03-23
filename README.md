@@ -44,7 +44,7 @@ websites in this order:
 **install**
 ===============
 
-To install Artiscope you need to run these commands.
+To install and use Artiscope you need to run these commands.
 ```
 git clone https://github.com/sirsru/Artiscope.git
 
@@ -68,7 +68,21 @@ python3 browser.py
 >`pip install requests`
 `pip install beautifulsoup4`
 `pip install Pillow`
- 
+
+
+**Further use**
+==========================
+After downloading Artiscope and closing it, if you wish to start it again you need to run these commands to start the python environment.
+
+>windows `venv\Scripts\activate`
+
+>linux and macos `source venv/bin/activate`
+
+```
+cd Artiscope
+python3 browser.py
+```
+
 
 **settings**
 ----------------------
