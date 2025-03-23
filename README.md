@@ -74,10 +74,6 @@ python3 browser.py
 ==========================
 After downloading Artiscope and closing it, if you wish to start it again you need to run these commands to start the python environment.
 
->windows `venv\Scripts\activate`
-
->linux and macos `source venv/bin/activate`
-
 ```
 cd Artiscope
 python3 browser.py
