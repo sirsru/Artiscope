@@ -1,9 +1,11 @@
-import requests
 from bs4 import BeautifulSoup
 from PIL import Image
+from googlesearch import search
+import requests
 import io
 import os
 import hashlib
+import re
 
 logo = ''' 
 ░▒▓██████▓▒ ░▒▓███████▓▒ ▒▓████████▓▒ ▒▓█▓▒░ ▒▓███████▓▒ ░▒▓██████▓▒░ ░▒▓██████▓▒░ ▒▓███████▓▒░ ▒▓████████▓▒░ 
@@ -16,17 +18,49 @@ logo = '''
 https://github.com/sirsru/Artiscope
 '''
 
+
 def get_terminal_width():
     try:
         return os.get_terminal_size().columns
     except OSError:
         return 100
 
+
 settings = {
     "max_width": get_terminal_width(),
     "check_similarity": True,
     "allowed_formats": ["PNG", "JPEG", "GIF", "BMP", "TIFF", "WEBP"]
 }
+
+def display_settings_menu():
+    print(f"\n{CYAN}Settings{RESET}")
+    print(f"1. {GREEN}Set maximum width/resolution for ASCII art ({settings['max_width']}){RESET}")
+    print(f"2. {GREEN}Toggle image similarity check ({'Enabled' if settings['check_similarity'] else 'Disabled'}){RESET}")
+    print(f"3. {GREEN}Set allowed image formats ({', '.join(settings['allowed_formats'])}){RESET}")
+    print(f"4. {RED}Back to main menu{RESET}")
+    print("Go to https://github.com/sirsru/Artiscope for more help!")
+    choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
+
+    if choice == '1':
+        new_width = input(f"{CYAN}Enter new maximum width for ASCII art: {RESET}")
+        try:
+            settings['max_width'] = int(new_width)
+            print(f"{GREEN}Max width set to {settings['max_width']}{RESET}")
+        except ValueError:
+            print(f"{RED}Invalid input. Please enter a number.{RESET}")
+    elif choice == '2':
+        settings['check_similarity'] = not settings['check_similarity']
+        print(f"{GREEN}Image similarity check {'enabled' if settings['check_similarity'] else 'disabled'}{RESET}")
+    elif choice == '3':
+        new_formats = input(f"{CYAN}Enter allowed image formats (comma separated): {RESET}")
+        settings['allowed_formats'] = [fmt.strip().upper() for fmt in new_formats.split(',')]
+        print(f"{GREEN}Allowed image formats updated to {', '.join(settings['allowed_formats'])}{RESET}")
+    elif choice == '4':
+        return
+    else:
+        print(f"{RED}Invalid choice, try again.{RESET}")
+    display_settings_menu()
+
 
 def check_network():
     try:
@@ -47,6 +81,7 @@ MAGENTA = "\033[35m"
 CYAN = "\033[36m"
 WHITE = "\033[37m"
 BLACK = "\033[30m"
+
 
 def generate_image_hash(image):
     img = image.convert("L")
@@ -183,34 +218,26 @@ def scrape_and_convert_images(url, max_width=settings['max_width']):
     return links_list
 
 
-def display_settings_menu():
-    print(f"\n{CYAN}Settings{RESET}")
-    print(f"1. {GREEN}Set maximum width/resolution for ASCII art ({settings['max_width']}){RESET}")
-    print(f"2. {GREEN}Toggle image similarity check ({'Enabled' if settings['check_similarity'] else 'Disabled'}){RESET}")
-    print(f"3. {GREEN}Set allowed image formats ({', '.join(settings['allowed_formats'])}){RESET}")
-    print(f"4. {RED}Back to main menu{RESET}")
-    print("Go to https://github.com/sirsru/Artiscope for more help!")
-    choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
+from googlesearch import search
 
-    if choice == '1':
-        new_width = input(f"{CYAN}Enter new maximum width for ASCII art: {RESET}")
-        try:
-            settings['max_width'] = int(new_width)
-            print(f"{GREEN}Max width set to {settings['max_width']}{RESET}")
-        except ValueError:
-            print(f"{RED}Invalid input. Please enter a number.{RESET}")
-    elif choice == '2':
-        settings['check_similarity'] = not settings['check_similarity']
-        print(f"{GREEN}Image similarity check {'enabled' if settings['check_similarity'] else 'disabled'}{RESET}")
-    elif choice == '3':
-        new_formats = input(f"{CYAN}Enter allowed image formats (comma separated): {RESET}")
-        settings['allowed_formats'] = [fmt.strip().upper() for fmt in new_formats.split(',')]
-        print(f"{GREEN}Allowed image formats updated to {', '.join(settings['allowed_formats'])}{RESET}")
-    elif choice == '4':
-        return
-    else:
-        print(f"{RED}Invalid choice, try again.{RESET}")
-    display_settings_menu()
+def google_search(query, num_results=10):
+    results = []
+    try:
+        # Use googlesearch to fetch results
+        for url in search(query, num_results=num_results):
+            results.append(url)
+
+        if results:
+            return results
+        else:
+            print(f"{RED}No results found for '{query}'. Please try again.{RESET}")
+            return []
+
+    except Exception as e:
+        print(f"{RED}Error fetching Google search results: {e}{RESET}")
+        return []
+
+
 
 def interactive_browsing():
     print(f"{CYAN}Welcome to Artiscope the interactive Ascii internet browser!{RESET}")
@@ -223,8 +250,9 @@ def interactive_browsing():
     while True:
         print(f"\n{BLUE}Main Menu{RESET}")
         print(f"1. Browse the web")
-        print(f"2. {CYAN}Settings{RESET}")
-        print(f"3. {RED}Exit{RESET}")
+        print(f"2. {CYAN}Search the web{RESET}")
+        print(f"3. {CYAN}Settings{RESET}")
+        print(f"4. {RED}Exit{RESET}")
 
         choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
 
@@ -236,7 +264,8 @@ def interactive_browsing():
                 print(f"\n{YELLOW}Options:{RESET}")
                 print(f"1. {GREEN}Go to link # {RESET}.")
                 print(f"2. {CYAN}Enter another URL{RESET}.")
-                print(f"3. {RED}Go back to Main Menu{RESET}.")
+                print(f"3. {CYAN}Search for something{RESET}.")
+                print(f"4. {RED}Go back to Main Menu{RESET}.")
 
                 choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
 
@@ -256,16 +285,62 @@ def interactive_browsing():
                         print(f"{RED}Exiting the browser. Goodbye!{RESET}")
                         break
 
-                elif choice == '3':
+                elif choice == '4':
                     print(f"{RED}Exiting the browser. Goodbye!{RESET}")
                     break
+
+                elif choice == '3':
+                    search_query = input(f"{CYAN}Enter a search term: {RESET}").strip()
+                    search_results = google_search(search_query)
+                    print(f"\n{CYAN}Top search results for '{search_query}':{RESET}")
+                    for idx, result in enumerate(search_results, 1):
+                        print(f"{GREEN}{idx}. {result}{RESET}")
+
         elif choice == '2':
-            display_settings_menu()
+            search_query = input(f"{CYAN}Enter a search term: {RESET}").strip()
+            search_results = google_search(search_query)
+            if search_results:
+                print(f"\n{CYAN}Top search results for '{search_query}':{RESET}")
+                for idx, result in enumerate(search_results, 1):
+                    print(f"{GREEN}{idx}. {result}{RESET}")
+
+                while True:
+                    # Only show options related to search results.
+                    print(f"\n{CYAN}Enter the number of the link you want to visit, or enter 0 to go back to the options menu.")
+                    choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
+
+                    if choice == '0':
+                        break
+
+                    elif choice.isdigit():
+                        link_choice = int(choice) - 1
+                        if 0 <= link_choice < len(search_results):
+                            selected_link = search_results[link_choice]
+                            print(f"{MAGENTA}Going to {selected_link}{RESET}")
+                            # Now, visit the selected link and browse it
+                            links = scrape_and_convert_images(selected_link)
+                            print(f"\n{YELLOW}Options:{RESET}")
+                            print(f"1. {GREEN}Go to link # {RESET}.")
+                            print(f"2. {CYAN}Enter another URL{RESET}.")
+                            print(f"3. {CYAN}Search for something{RESET}.")
+                            print(f"4. {RED}Go back to options menu{RESET}.")
+                        else:
+                            print(f"{RED}Invalid choice.{RESET}")
+
+                    else:
+                        print(f"{RED}Invalid input.{RESET}")
+
         elif choice == '3':
+            display_settings_menu()
+
+        elif choice == '4':
             print(f"{RED}Exiting the browser. Goodbye!{RESET}")
             break
         else:
-            print(f"{RED}Invalid choice. Please try again.{RESET}")
+            print(f"{RED}Invalid choice.{RESET}")
+
+
+
 
 
 if __name__ == "__main__":
