@@ -85,10 +85,6 @@ def image_to_ascii(image_url, max_width=100, previous_image_hash=None):
         response = requests.get(image_url)
         img = Image.open(io.BytesIO(response.content))
 
-
-        if img.mode == 'RGBA':
-            img = img.convert('RGB')
-
         if img.format not in settings["allowed_formats"]:
             print(f"{YELLOW}Skipping unsupported image format: {img.format} (URL: {image_url}){RESET}")
             return None, previous_image_hash
