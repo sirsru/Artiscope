@@ -10,22 +10,17 @@ Artiscope is a python based ascii internet browser capable of rendering art from
 
 ![image](https://github.com/user-attachments/assets/bb35d689-9d4a-49d1-a516-6e8a018628ab)
 
-**install**
-===============
-
-To install Artiscope you need to run these commands.
-
-`git clone github.com/sirsru/Artiscope`
-
-`cd Artiscope`
-
-`pip install -r requirements.txt`
-
 
 **examples**
 ======================
 Here are some example websites being rendered.
-websites in this order, github.com, python.org, newgrounds.com
+websites in this order:
+
+*github.com*
+
+*python.org*
+
+*newgrounds.com*
 
 ***github***
 -------------------
@@ -46,6 +41,18 @@ websites in this order, github.com, python.org, newgrounds.com
 ![image](https://github.com/user-attachments/assets/13237c89-90a2-4e64-ab5f-372c1c82200f)
 
 
+**install**
+===============
+
+To install Artiscope you need to run these commands.
+
+`git clone github.com/sirsru/Artiscope`
+
+`cd Artiscope`
+
+`pip install -r requirements.txt`
+
+
 **settings**
 ----------------------
 The settings menu for Artiscope can be accessed from the main menu, in which you can change the ascii image resolution and size, allowed image formats, and similar image toggle.
@@ -59,3 +66,7 @@ The settings menu for Artiscope can be accessed from the main menu, in which you
 **Enter another URL** - enter a different URL
 
 **Go back to the Main Menu** - goes back to the homescreen with settings and other options
+
+**Browse the web** - prompts you for a URL along with other options
+
+
