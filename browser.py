@@ -13,7 +13,7 @@ logo = '''
 ░▒▓█▓▒░░▒▓█▓▒ ▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒       ░▒▓█▓▒ ▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒ ▒▓█▓▒░      ░▒▓█▓▒░        
 ░▒▓█▓▒░░▒▓█▓▒ ▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒       ░▒▓█▓▒ ▒▓█▓▒░░▒▓█▓▒ ▒▓█▓▒░░▒▓█▓▒ ▒▓█▓▒░      ░▒▓█▓▒░        
 ░▒▓█▓▒░░▒▓█▓▒ ▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░   ░▒▓█▓▒ ▒▓███████▓▒░ ░▒▓██████▓▒░ ░▒▓██████▓▒░ ▒▓█▓▒░      ░▒▓████████▓▒░ 
-https://github.com/sirsru
+https://github.com/sirsru/Artiscope
 '''
 
 settings = {
@@ -192,6 +192,7 @@ def display_settings_menu():
     print(f"2. {GREEN}Toggle image similarity check ({'Enabled' if settings['check_similarity'] else 'Disabled'}){RESET}")
     print(f"3. {GREEN}Set allowed image formats ({', '.join(settings['allowed_formats'])}){RESET}")
     print(f"4. {RED}Back to main menu{RESET}")
+    print("Go to https://github.com/sirsru/Artiscope for more help!")
     choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
 
     if choice == '1':
