@@ -74,6 +74,14 @@ After downloading Artiscope and closing it, if you wish to start it again you ne
 
 ```
 cd Artiscope
+```
+>*windows*
+>`venv\Scripts\activate`
+
+>*linux and macos*
+>`source venv/bin/activate`
+
+```
 python3 browser.py
 ```
 
