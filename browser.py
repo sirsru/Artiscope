@@ -116,6 +116,28 @@ def rgb_to_terminal_color(r, g, b):
             return WHITE
 
 
+def scrape_and_output_text(url):
+    if not url.lower().startswith(('http://', 'https://')):
+        url = 'https://' + url
+
+    try:
+        response = requests.get(url, allow_redirects=True)
+        final_url = response.url
+    except requests.exceptions.RequestException as e:
+        print(f"{RED}Error fetching page {url}: {e}{RESET}")
+        return
+
+    print(f"{CYAN}Page redirected to: {final_url}{RESET}")
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Extract all text content
+    text_content = soup.get_text(separator="\n", strip=True)
+
+    # Output the text in white color
+    print(f"\n{WHITE}{text_content}{RESET}")
+
+
 def image_to_ascii(image_url, max_width=settings['max_width'], previous_image_hash=None):
     try:
         response = requests.get(image_url)
@@ -156,6 +178,8 @@ def image_to_ascii(image_url, max_width=settings['max_width'], previous_image_ha
     return ascii_image, current_image_hash
 
 
+
+
 def scrape_and_convert_images(url, max_width=settings['max_width']):
     if not url.lower().startswith(('http://', 'https://')):
         url = 'https://' + url
@@ -170,6 +194,9 @@ def scrape_and_convert_images(url, max_width=settings['max_width']):
     print(f"{CYAN}Page redirected to: {final_url}{RESET}")
 
     soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Scrape and output text content
+    scrape_and_output_text(url)
 
     images = soup.find_all('img')
     links = soup.find_all('a')
@@ -218,6 +245,7 @@ def scrape_and_convert_images(url, max_width=settings['max_width']):
     return links_list
 
 
+
 from googlesearch import search
 
 def google_search(query, num_results=10):
@@ -249,8 +277,8 @@ def interactive_browsing():
 
     while True:
         print(f"\n{BLUE}Main Menu{RESET}")
-        print(f"1. Browse the web")
-        print(f"2. {CYAN}Search the web{RESET}")
+        print(f"1. enter direct URL")
+        print(f"2. {CYAN}Search the internet{RESET}")
         print(f"3. {CYAN}Settings{RESET}")
         print(f"4. {RED}Exit{RESET}")
 
