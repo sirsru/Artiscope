@@ -1,6 +1,4 @@
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-
-![Status](https://img.shields.io/badge/Stable-green.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg) ![Status](https://img.shields.io/badge/Stable-green.svg)
 
 **ARTISCOPE**
 ======================
