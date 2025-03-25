@@ -25,19 +25,141 @@ def get_terminal_width():
     except OSError:
         return 100
 
+themes = {
+    "DARK": {
+        "RESET": "\033[0m",
+        "BOLD": "\033[1m",
+        "RED": "\033[31m",
+        "GREEN": "\033[32m",
+        "YELLOW": "\033[33m",
+        "BLUE": "\033[34m",
+        "MAGENTA": "\033[35m",
+        "CYAN": "\033[36m",
+        "WHITE": "\033[37m",
+        "BLACK": "\033[30m",
+    },
+    "LIGHT": {
+        "RESET": "\033[0m",
+        "BOLD": "\033[1m",
+        "RED": "\033[91m",
+        "GREEN": "\033[92m",
+        "YELLOW": "\033[93m",
+        "BLUE": "\033[94m",
+        "MAGENTA": "\033[95m",
+        "CYAN": "\033[96m",
+        "WHITE": "\033[97m",
+        "BLACK": "\033[98m",
+    },
+    "RETRO": {
+        "RESET": "\033[0m",
+        "BOLD": "\033[1m",
+        "RED": "\033[38;2;192;72;82m",    # Lightened Red from #D52429 (Faded red)
+        "GREEN": "\033[38;2;232;142;119m",  # Lightened Orange from #F1602C (Faded orange)
+        "YELLOW": "\033[38;2;227;180;101m", # Lightened Yellow-Orange from #EC8922 (Faded yellow-orange)
+        "BLUE": "\033[38;2;161;105;46m",    # Lightened Brown from #915018 (Faded brown)
+        "MAGENTA": "\033[38;2;145;90;43m",  # Lightened Dark Brown from #6C3F18 (Faded brownish)
+        "CYAN": "\033[38;2;161;105;46m",    # Same as BLUE for consistency (Faded brown)
+        "WHITE": "\033[38;2;235;235;235m",  # Off-white for washed-out effect
+        "BLACK": "\033[38;2;75;75;75m",     # Muted Black (#4B4B4B) for washed-out black
+    },
+    "PASTEL": {
+        "RESET": "\033[0m",
+        "BOLD": "\033[1m",
+        "RED": "\033[38;2;255;182;193m",    # Pastel light pink
+        "GREEN": "\033[38;2;187;255;163m",  # Pastel light green
+        "YELLOW": "\033[38;2;253;253;150m", # Pastel light yellow
+        "BLUE": "\033[38;2;174;198;255m",   # Pastel light blue
+        "MAGENTA": "\033[38;2;255;178;227m",# Pastel light magenta
+        "CYAN": "\033[38;2;182;255;255m",   # Pastel light cyan
+        "WHITE": "\033[38;2;255;255;255m",  # White for pastel style
+        "BLACK": "\033[38;2;200;200;200m",  # Light gray for black in pastel
+    },
+    "VINTAGE": {
+        "RESET": "\033[0m",
+        "BOLD": "\033[1m",
+        "RED": "\033[38;2;143;75;60m",    # Vintage brownish red
+        "GREEN": "\033[38;2;85;93;66m",   # Muted green
+        "YELLOW": "\033[38;2;178;156;67m",# Vintage yellow
+        "BLUE": "\033[38;2;65;75;86m",    # Deep vintage blue
+        "MAGENTA": "\033[38;2;123;75;113m",# Muted magenta
+        "CYAN": "\033[38;2;60;90;110m",   # Soft cyan
+        "WHITE": "\033[38;2;241;232;199m",# Soft white
+        "BLACK": "\033[38;2;78;62;50m",   # Dark brownish black
+    },
+    "DESERT": {
+        "RESET": "\033[0m",
+        "BOLD": "\033[1m",
+        "RED": "\033[38;2;255;140;105m",    # Desert red (lighter and more orange)
+        "GREEN": "\033[38;2;107;142;35m",   # Desert green (duller)
+        "YELLOW": "\033[38;2;210;180;140m", # Desert yellow (muted)
+        "BLUE": "\033[38;2;70;130;180m",    # Desert blue
+        "MAGENTA": "\033[38;2;128;0;128m",  # Desert magenta (darker)
+        "CYAN": "\033[38;2;0;255;255m",     # Desert cyan
+        "WHITE": "\033[38;2;255;255;255m",  # Desert white
+        "BLACK": "\033[38;2;0;0;0m",        # Desert black
+    },
+    "NEON": {
+        "RESET": "\033[0m",
+        "BOLD": "\033[1m",
+        "RED": "\033[38;2;255;0;0m",        # Neon red
+        "GREEN": "\033[38;2;57;255;20m",    # Neon green
+        "YELLOW": "\033[38;2;255;255;0m",   # Neon yellow
+        "BLUE": "\033[38;2;0;102;255m",     # Neon blue
+        "MAGENTA": "\033[38;2;255;0;255m",  # Neon magenta
+        "CYAN": "\033[38;2;0;255;255m",     # Neon cyan
+        "WHITE": "\033[38;2;255;255;255m",  # White neon
+        "BLACK": "\033[38;2;0;0;0m",        # Black
+    },
+    "WINTER": {
+        "RESET": "\033[0m",
+        "BOLD": "\033[1m",
+        "RED": "\033[38;2;255;87;34m",     # Winter red
+        "GREEN": "\033[38;2;0;128;128m",   # Winter green (pine)
+        "YELLOW": "\033[38;2;255;214;0m",  # Winter yellow (snowy)
+        "BLUE": "\033[38;2;25;118;210m",   # Winter blue
+        "MAGENTA": "\033[38;2;193;64;114m",# Winter magenta
+        "CYAN": "\033[38;2;0;183;189m",    # Winter cyan
+        "WHITE": "\033[38;2;255;255;255m", # Winter white
+        "BLACK": "\033[38;2;33;33;33m",    # Winter black (darker tone)
+    },
+    "OCEAN": {
+        "RESET": "\033[0m",
+        "BOLD": "\033[1m",
+        "RED": "\033[38;2;255;69;0m",      # Ocean red (darker)
+        "GREEN": "\033[38;2;46;139;87m",   # Ocean green (deeper)
+        "YELLOW": "\033[38;2;255;215;0m",  # Ocean yellow
+        "BLUE": "\033[38;2;70;130;180m",   # Ocean blue (darker)
+        "MAGENTA": "\033[38;2;255;105;180m",# Ocean magenta
+        "CYAN": "\033[38;2;0;206;209m",    # Ocean cyan
+        "WHITE": "\033[38;2;255;255;255m", # Ocean white
+        "BLACK": "\033[38;2;0;0;0m",       # Ocean black
+    }
+}
+
 
 settings = {
     "max_width": get_terminal_width(),
     "check_similarity": True,
-    "allowed_formats": ["PNG", "JPEG", "GIF", "BMP", "TIFF", "WEBP"]
+    "allowed_formats": ["PNG", "JPEG", "GIF", "BMP", "TIFF", "WEBP"],
+    "themes": list(themes.keys()),  # Dynamically get theme names from the 'themes' dictionary
+    "current_theme": 0  # Default theme is the first one in the list
 }
+
+# Define color codes for different themes
+
+def apply_theme(theme_name):
+    global RESET, BOLD, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, BLACK
+
+    theme = themes.get(theme_name.upper(), themes["DARK"])  # Default to DARK theme if invalid
+    RESET, BOLD, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, BLACK = theme.values()
 
 def display_settings_menu():
     print(f"\n{CYAN}Settings{RESET}")
     print(f"1. {GREEN}Set maximum width/resolution for ASCII art ({settings['max_width']}){RESET}")
     print(f"2. {GREEN}Toggle image similarity check ({'Enabled' if settings['check_similarity'] else 'Disabled'}){RESET}")
     print(f"3. {GREEN}Set allowed image formats ({', '.join(settings['allowed_formats'])}){RESET}")
-    print(f"4. {RED}Back to main menu{RESET}")
+    print(f"4. {GREEN}Toggle themes ({settings['themes'][settings['current_theme']]} theme){RESET}")
+    print(f"5. {RED}Back to main menu{RESET}")
     print("Go to https://github.com/sirsru/Artiscope for more help!")
     choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
 
@@ -56,11 +178,20 @@ def display_settings_menu():
         settings['allowed_formats'] = [fmt.strip().upper() for fmt in new_formats.split(',')]
         print(f"{GREEN}Allowed image formats updated to {', '.join(settings['allowed_formats'])}{RESET}")
     elif choice == '4':
+        # Toggle themes
+        print(f"Current theme is: {settings['themes'][settings['current_theme']]}")
+        settings['current_theme'] = (settings['current_theme'] + 1) % len(settings['themes'])  # Cycle through themes
+        apply_theme(settings['themes'][settings['current_theme']])
+        print(f"{GREEN}Switched to {settings['themes'][settings['current_theme']]} theme{RESET}")
+    elif choice == '5':
         return
     else:
         print(f"{RED}Invalid choice, try again.{RESET}")
     display_settings_menu()
 
+
+# Initialize with the default theme
+apply_theme(settings["themes"][settings["current_theme"]])
 
 def check_network():
     try:
@@ -69,18 +200,6 @@ def check_network():
             return True
     except requests.ConnectionError:
         return False
-
-
-RESET = "\033[0m"
-BOLD = "\033[1m"
-RED = "\033[31m"
-GREEN = "\033[32m"
-YELLOW = "\033[33m"
-BLUE = "\033[34m"
-MAGENTA = "\033[35m"
-CYAN = "\033[36m"
-WHITE = "\033[37m"
-BLACK = "\033[30m"
 
 
 def generate_image_hash(image):
@@ -131,10 +250,8 @@ def scrape_and_output_text(url):
 
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Extract all text content
     text_content = soup.get_text(separator="\n", strip=True)
 
-    # Output the text in white color
     print(f"\n{WHITE}{text_content}{RESET}")
 
 
@@ -195,7 +312,6 @@ def scrape_and_convert_images(url, max_width=settings['max_width']):
 
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Scrape and output text content
     scrape_and_output_text(url)
 
     images = soup.find_all('img')
@@ -244,14 +360,9 @@ def scrape_and_convert_images(url, max_width=settings['max_width']):
 
     return links_list
 
-
-
-from googlesearch import search
-
 def google_search(query, num_results=10):
     results = []
     try:
-        # Use googlesearch to fetch results
         for url in search(query, num_results=num_results):
             results.append(url)
 
@@ -264,7 +375,6 @@ def google_search(query, num_results=10):
     except Exception as e:
         print(f"{RED}Error fetching Google search results: {e}{RESET}")
         return []
-
 
 
 def interactive_browsing():
@@ -286,43 +396,7 @@ def interactive_browsing():
 
         if choice == '1':
             url = input(f"{GREEN}Enter a URL to start browsing: {RESET}").strip()
-            while True:
-                print(f"\n{BLUE}Now browsing: {url}{RESET}")
-                links = scrape_and_convert_images(url)
-                print(f"\n{YELLOW}Options:{RESET}")
-                print(f"1. {GREEN}Go to link # {RESET}.")
-                print(f"2. {CYAN}Enter another URL{RESET}.")
-                print(f"3. {CYAN}Search for something{RESET}.")
-                print(f"4. {RED}Go back to Main Menu{RESET}.")
-
-                choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
-
-                if choice == '1':
-                    try:
-                        link_choice = int(input(f"{CYAN}Enter the link number to visit: {RESET}")) - 1
-                        selected_link = links[link_choice]
-                        url = selected_link[1]
-                        print(f"{MAGENTA}Going to {url}{RESET}")
-                    except (ValueError, IndexError):
-                        print(f"{RED}Invalid choice. Please try again.{RESET}")
-
-                elif choice == '2':
-                    print(f"{CYAN}Going back to the previous page.{RESET}")
-                    url = input(f"{GREEN}Enter a URL to go back to (or 'exit' to quit): {RESET}").strip()
-                    if url.lower() == 'exit':
-                        print(f"{RED}Exiting the browser. Goodbye!{RESET}")
-                        break
-
-                elif choice == '4':
-                    print(f"{RED}Exiting the browser. Goodbye!{RESET}")
-                    break
-
-                elif choice == '3':
-                    search_query = input(f"{CYAN}Enter a search term: {RESET}").strip()
-                    search_results = google_search(search_query)
-                    print(f"\n{CYAN}Top search results for '{search_query}':{RESET}")
-                    for idx, result in enumerate(search_results, 1):
-                        print(f"{GREEN}{idx}. {result}{RESET}")
+            browsing_url(url)
 
         elif choice == '2':
             search_query = input(f"{CYAN}Enter a search term: {RESET}").strip()
@@ -331,32 +405,7 @@ def interactive_browsing():
                 print(f"\n{CYAN}Top search results for '{search_query}':{RESET}")
                 for idx, result in enumerate(search_results, 1):
                     print(f"{GREEN}{idx}. {result}{RESET}")
-
-                while True:
-                    # Only show options related to search results.
-                    print(f"\n{CYAN}Enter the number of the link you want to visit, or enter 0 to go back to the options menu.")
-                    choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
-
-                    if choice == '0':
-                        break
-
-                    elif choice.isdigit():
-                        link_choice = int(choice) - 1
-                        if 0 <= link_choice < len(search_results):
-                            selected_link = search_results[link_choice]
-                            print(f"{MAGENTA}Going to {selected_link}{RESET}")
-                            # Now, visit the selected link and browse it
-                            links = scrape_and_convert_images(selected_link)
-                            print(f"\n{YELLOW}Options:{RESET}")
-                            print(f"1. {GREEN}Go to link # {RESET}.")
-                            print(f"2. {CYAN}Enter another URL{RESET}.")
-                            print(f"3. {CYAN}Search for something{RESET}.")
-                            print(f"4. {RED}Go back to options menu{RESET}.")
-                        else:
-                            print(f"{RED}Invalid choice.{RESET}")
-
-                    else:
-                        print(f"{RED}Invalid input.{RESET}")
+                show_options_menu(search_results)
 
         elif choice == '3':
             display_settings_menu()
@@ -368,6 +417,85 @@ def interactive_browsing():
             print(f"{RED}Invalid choice.{RESET}")
 
 
+def browsing_url(url):
+    while True:
+        print(f"\n{BLUE}Now browsing: {url}{RESET}")
+        links = scrape_and_convert_images(url)
+        print(f"\n{YELLOW}Options:{RESET}")
+        print(f"1. {GREEN}Go to link # {RESET}.")
+        print(f"2. {CYAN}Enter another URL{RESET}.")
+        print(f"3. {CYAN}Search for something{RESET}.")
+        print(f"4. {RED}Go back to Main Menu{RESET}")
+
+        choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
+
+        if choice == '1':
+            try:
+                link_choice = int(input(f"{CYAN}Enter the link number to visit: {RESET}")) - 1
+                selected_link = links[link_choice]
+                url = selected_link[1]
+                print(f"{MAGENTA}Going to {url}{RESET}")
+            except (ValueError, IndexError):
+                print(f"{RED}Invalid choice. Please try again.{RESET}")
+
+        elif choice == '2':
+            print(f"{CYAN}Going back to the previous page.{RESET}")
+            url = input(f"{GREEN}Enter a URL to go back to (or 'exit' to quit): {RESET}").strip()
+            if url.lower() == 'exit':
+                print(f"{RED}Exiting the browser. Goodbye!{RESET}")
+                break
+
+        elif choice == '3':
+            search_query = input(f"{CYAN}Enter a search term: {RESET}").strip()
+            search_results = google_search(search_query)
+            print(f"\n{CYAN}Top search results for '{search_query}':{RESET}")
+            for idx, result in enumerate(search_results, 1):
+                print(f"{GREEN}{idx}. {result}{RESET}")
+            show_options_menu(search_results)
+
+        elif choice == '4':
+            print(f"{RED}Going back to Main Menu...{RESET}")
+            break
+
+
+def show_options_menu(results=None):
+    print(f"\n{YELLOW}Options:{RESET}")
+    print(f"1. {GREEN}Go to link # {RESET}.")
+    print(f"2. {CYAN}Enter another URL{RESET}.")
+    print(f"3. {CYAN}Search for something{RESET}.")
+    print(f"4. {RED}Go back to Main Menu{RESET}")
+
+    choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
+
+    if choice == '1' and results:
+        try:
+            link_choice = int(input(f"{CYAN}Enter the link number to visit: {RESET}")) - 1
+            selected_link = results[link_choice]
+            print(f"{MAGENTA}Going to {selected_link}{RESET}")
+            links = scrape_and_convert_images(selected_link)
+            show_options_menu(links)
+
+        except (ValueError, IndexError):
+            print(f"{RED}Invalid choice. Please try again.{RESET}")
+
+    elif choice == '2':
+        print(f"{CYAN}Going back to the previous page.{RESET}")
+        url = input(f"{GREEN}Enter a URL to go back to (or 'exit' to quit): {RESET}").strip()
+        if url.lower() == 'exit':
+            print(f"{RED}Exiting the browser. Goodbye!{RESET}")
+            exit()
+
+    elif choice == '3':
+        search_query = input(f"{CYAN}Enter a search term: {RESET}").strip()
+        search_results = google_search(search_query)
+        print(f"\n{CYAN}Top search results for '{search_query}':{RESET}")
+        for idx, result in enumerate(search_results, 1):
+            print(f"{GREEN}{idx}. {result}{RESET}")
+        show_options_menu(search_results)
+
+    elif choice == '4':
+        print(f"{MAGENTA}Going back to Main Menu...{RESET}")
+        return
 
 
 
