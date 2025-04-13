@@ -7,9 +7,13 @@ Version 1.0.2
 
 Table of contents
 -------------------
-(about)[#about-Artiscope]
-(examples)[#examples]
-
+[about](#About-Artiscope)<br>
+[examples](#examples)<br>
+[install](#install)
+[running Artiscope](#How-to-run)
+[settings](#settings)
+[how to use](#How-to-use)
+[updates](#updates)
 
 **About Artiscope**
 ======================
@@ -78,7 +82,7 @@ python3 browser.py
 `pip install Pillow`
 
 
-**Further use**
+**How to run**
 ==========================
 After downloading Artiscope and closing it, if you wish to start it again you need to run these commands to start the python environment.
 
@@ -115,3 +119,8 @@ The settings menu for Artiscope can be accessed from the main menu, in which you
 **Setting** - allows you to change options in the browser like **themes** and **emoji compatibility**
 
 **Info and updates** - shows you the current version of your browser, allows you to check the newest version of the browser, and download the latest version!
+
+
+**updates**
+======================
+Last but not least we have the updates! There is a built in option to update or check if you are up to date in Artiscope! All you have to do to install a new update is go to **info and updates** and choose **Update by cloning github repo** or **Check for update**
