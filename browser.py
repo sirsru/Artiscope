@@ -153,7 +153,7 @@ settings = {
     "search_results": 10
 }
 
-version = "Version 1.0.1"
+version = "Version 1.0.2"
 
 def apply_theme(theme_name):
     global RESET, BOLD, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, BLACK
