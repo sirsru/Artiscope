@@ -87,7 +87,7 @@ cd Artiscope
 ```
 python3 browser.py
 ```
-
+After the original install all updates done to this repository can be done from inside the browser by going to **info and updates** and selecting option 1.
 
 **settings**
 ----------------------
@@ -105,4 +105,6 @@ The settings menu for Artiscope can be accessed from the main menu, in which you
 
 **Browse the web** - prompts you for a URL along with other options
 
+**Setting** - allows you to change options in the browser like **themes** and **emoji compatibility**
 
+**Info and updates** - shows you the current version of your browser, allows you to check the newest version of the browser, and download the latest version!
