@@ -1,19 +1,8 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg) ![Status](https://img.shields.io/badge/Stable-green.svg) <br>
 Version 1.0.2
 
-
 **ARTISCOPE**
 ======================
-
-Table of contents
--------------------
-[about](#About-Artiscope)<br>
-[examples](#examples)<br>
-[install](#install)<br>
-[running Artiscope](#How-to-run)<br>
-[settings](#settings)<br>
-[how to use](#How-to-use)<br>
-[updates](#updates)<br>
 
 **About Artiscope**
 ======================
@@ -25,6 +14,15 @@ some images may not be the most recent ones!
 
 ![image](https://github.com/user-attachments/assets/8430fcc7-1009-4a51-a8d7-aacc595f3c37)
 
+Table of contents
+-------------------
+[about](#About-Artiscope)<br>
+[examples](#examples)<br>
+[install](#install)<br>
+[running Artiscope](#How-to-run)<br>
+[settings](#settings)<br>
+[how to use](#How-to-use)<br>
+[updates](#updates)<br>
 
 
 **examples**
