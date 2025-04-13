@@ -29,7 +29,7 @@ def get_terminal_width():
         return os.get_terminal_size().columns
     except OSError:
         return 100
-
+# --------------- create themes ---------------------
 themes = {
     "DARK": {
         "RESET": "\033[0m",
@@ -58,102 +58,102 @@ themes = {
     "RETRO": {
         "RESET": "\033[0m",
         "BOLD": "\033[1m",
-        "RED": "\033[38;2;192;72;82m",    # Lightened Red from #D52429 (Faded red)
-        "GREEN": "\033[38;2;232;142;119m",  # Lightened Orange from #F1602C (Faded orange)
-        "YELLOW": "\033[38;2;227;180;101m", # Lightened Yellow-Orange from #EC8922 (Faded yellow-orange)
-        "BLUE": "\033[38;2;161;105;46m",    # Lightened Brown from #915018 (Faded brown)
-        "MAGENTA": "\033[38;2;145;90;43m",  # Lightened Dark Brown from #6C3F18 (Faded brownish)
-        "CYAN": "\033[38;2;161;105;46m",    # Same as BLUE for consistency (Faded brown)
-        "WHITE": "\033[38;2;235;235;235m",  # Off-white for washed-out effect
-        "BLACK": "\033[38;2;75;75;75m",     # Muted Black (#4B4B4B) for washed-out black
+        "RED": "\033[38;2;192;72;82m",
+        "GREEN": "\033[38;2;232;142;119m",
+        "YELLOW": "\033[38;2;227;180;101m",
+        "BLUE": "\033[38;2;161;105;46m",
+        "MAGENTA": "\033[38;2;145;90;43m",
+        "CYAN": "\033[38;2;161;105;46m",
+        "WHITE": "\033[38;2;235;235;235m",
+        "BLACK": "\033[38;2;75;75;75m",
     },
     "PASTEL": {
         "RESET": "\033[0m",
         "BOLD": "\033[1m",
-        "RED": "\033[38;2;255;182;193m",    # Pastel light pink
-        "GREEN": "\033[38;2;187;255;163m",  # Pastel light green
-        "YELLOW": "\033[38;2;253;253;150m", # Pastel light yellow
-        "BLUE": "\033[38;2;174;198;255m",   # Pastel light blue
-        "MAGENTA": "\033[38;2;255;178;227m",# Pastel light magenta
-        "CYAN": "\033[38;2;182;255;255m",   # Pastel light cyan
-        "WHITE": "\033[38;2;255;255;255m",  # White for pastel style
-        "BLACK": "\033[38;2;200;200;200m",  # Light gray for black in pastel
+        "RED": "\033[38;2;255;182;193m",
+        "GREEN": "\033[38;2;187;255;163m",
+        "YELLOW": "\033[38;2;253;253;150m",
+        "BLUE": "\033[38;2;174;198;255m",
+        "MAGENTA": "\033[38;2;255;178;227m",
+        "CYAN": "\033[38;2;182;255;255m",
+        "WHITE": "\033[38;2;255;255;255m",
+        "BLACK": "\033[38;2;200;200;200m",
     },
     "VINTAGE": {
         "RESET": "\033[0m",
         "BOLD": "\033[1m",
-        "RED": "\033[38;2;143;75;60m",    # Vintage brownish red
-        "GREEN": "\033[38;2;85;93;66m",   # Muted green
-        "YELLOW": "\033[38;2;178;156;67m",# Vintage yellow
-        "BLUE": "\033[38;2;65;75;86m",    # Deep vintage blue
-        "MAGENTA": "\033[38;2;123;75;113m",# Muted magenta
-        "CYAN": "\033[38;2;60;90;110m",   # Soft cyan
-        "WHITE": "\033[38;2;241;232;199m",# Soft white
-        "BLACK": "\033[38;2;78;62;50m",   # Dark brownish black
+        "RED": "\033[38;2;143;75;60m",    #
+        "GREEN": "\033[38;2;85;93;66m",
+        "YELLOW": "\033[38;2;178;156;67m",
+        "BLUE": "\033[38;2;65;75;86m",
+        "MAGENTA": "\033[38;2;123;75;113m",
+        "CYAN": "\033[38;2;60;90;110m",
+        "WHITE": "\033[38;2;241;232;199m",
+        "BLACK": "\033[38;2;78;62;50m",
     },
     "DESERT": {
         "RESET": "\033[0m",
         "BOLD": "\033[1m",
-        "RED": "\033[38;2;255;140;105m",    # Desert red (lighter and more orange)
-        "GREEN": "\033[38;2;107;142;35m",   # Desert green (duller)
-        "YELLOW": "\033[38;2;210;180;140m", # Desert yellow (muted)
-        "BLUE": "\033[38;2;70;130;180m",    # Desert blue
-        "MAGENTA": "\033[38;2;128;0;128m",  # Desert magenta (darker)
-        "CYAN": "\033[38;2;0;255;255m",     # Desert cyan
-        "WHITE": "\033[38;2;255;255;255m",  # Desert white
-        "BLACK": "\033[38;2;0;0;0m",        # Desert black
+        "RED": "\033[38;2;255;140;105m",
+        "GREEN": "\033[38;2;107;142;35m",
+        "YELLOW": "\033[38;2;210;180;140m",
+        "BLUE": "\033[38;2;70;130;180m",
+        "MAGENTA": "\033[38;2;128;0;128m",
+        "CYAN": "\033[38;2;0;255;255m",
+        "WHITE": "\033[38;2;255;255;255m",
+        "BLACK": "\033[38;2;0;0;0m",
     },
     "NEON": {
         "RESET": "\033[0m",
         "BOLD": "\033[1m",
-        "RED": "\033[38;2;255;0;0m",        # Neon red
-        "GREEN": "\033[38;2;57;255;20m",    # Neon green
-        "YELLOW": "\033[38;2;255;255;0m",   # Neon yellow
-        "BLUE": "\033[38;2;0;102;255m",     # Neon blue
-        "MAGENTA": "\033[38;2;255;0;255m",  # Neon magenta
-        "CYAN": "\033[38;2;0;255;255m",     # Neon cyan
-        "WHITE": "\033[38;2;255;255;255m",  # White neon
-        "BLACK": "\033[38;2;0;0;0m",        # Black
+        "RED": "\033[38;2;255;0;0m",
+        "GREEN": "\033[38;2;57;255;20m",
+        "YELLOW": "\033[38;2;255;255;0m",
+        "BLUE": "\033[38;2;0;102;255m",
+        "MAGENTA": "\033[38;2;255;0;255m",
+        "CYAN": "\033[38;2;0;255;255m",
+        "WHITE": "\033[38;2;255;255;255m",
+        "BLACK": "\033[38;2;0;0;0m",
     },
     "WINTER": {
         "RESET": "\033[0m",
         "BOLD": "\033[1m",
-        "RED": "\033[38;2;255;87;34m",     # Winter red
-        "GREEN": "\033[38;2;0;128;128m",   # Winter green (pine)
-        "YELLOW": "\033[38;2;255;214;0m",  # Winter yellow (snowy)
-        "BLUE": "\033[38;2;25;118;210m",   # Winter blue
-        "MAGENTA": "\033[38;2;193;64;114m",# Winter magenta
-        "CYAN": "\033[38;2;0;183;189m",    # Winter cyan
-        "WHITE": "\033[38;2;255;255;255m", # Winter white
-        "BLACK": "\033[38;2;33;33;33m",    # Winter black (darker tone)
+        "RED": "\033[38;2;255;87;34m",
+        "GREEN": "\033[38;2;0;128;128m",
+        "YELLOW": "\033[38;2;255;214;0m",
+        "BLUE": "\033[38;2;25;118;210m",
+        "MAGENTA": "\033[38;2;193;64;114m",
+        "CYAN": "\033[38;2;0;183;189m",
+        "WHITE": "\033[38;2;255;255;255m",
+        "BLACK": "\033[38;2;33;33;33m",
     },
     "OCEAN": {
         "RESET": "\033[0m",
         "BOLD": "\033[1m",
-        "RED": "\033[38;2;255;69;0m",      # Ocean red (darker)
-        "GREEN": "\033[38;2;46;139;87m",   # Ocean green (deeper)
-        "YELLOW": "\033[38;2;255;215;0m",  # Ocean yellow
-        "BLUE": "\033[38;2;70;130;180m",   # Ocean blue (darker)
-        "MAGENTA": "\033[38;2;255;105;180m",# Ocean magenta
-        "CYAN": "\033[38;2;0;206;209m",    # Ocean cyan
-        "WHITE": "\033[38;2;255;255;255m", # Ocean white
-        "BLACK": "\033[38;2;0;0;0m",       # Ocean black
+        "RED": "\033[38;2;255;69;0m",
+        "GREEN": "\033[38;2;46;139;87m",
+        "YELLOW": "\033[38;2;255;215;0m",
+        "BLUE": "\033[38;2;70;130;180m",
+        "MAGENTA": "\033[38;2;255;105;180m",
+        "CYAN": "\033[38;2;0;206;209m",
+        "WHITE": "\033[38;2;255;255;255m",
+        "BLACK": "\033[38;2;0;0;0m",
     }
 }
 
-
+# ----------------------------------- general settings --------------------------------------------------
 settings = {
     "max_width": get_terminal_width(),
     "check_similarity": True,
     "allowed_formats": ["PNG", "JPEG", "GIF", "BMP", "TIFF", "WEBP"],
-    "themes": list(themes.keys()),  # Dynamically get theme names from the 'themes' dictionary
-    "current_theme": 0,  # Default theme is the first one in the list
+    "themes": list(themes.keys()),
+    "current_theme": 0,
     "verbose_output": True,
-    "emoji": True
+    "emoji": True,
+    "search_results": 10
 }
 
 version = "Version 1.0.1"
-# Define color codes for different themes
 
 def apply_theme(theme_name):
     global RESET, BOLD, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, BLACK
@@ -171,12 +171,13 @@ def display_settings_menu():
     print(f"{CYAN}|{RESET} [4] Current Theme          → {YELLOW}{settings['themes'][settings['current_theme']]:<30}{RESET}{RESET}")
     print(f"{CYAN}|{RESET} [5] verbose output         → {YELLOW}{settings['verbose_output']}{RESET}{RESET}")
     print(f"{CYAN}|{RESET} [6] Emoji support          → {YELLOW}{settings['emoji']}{RESET}{RESET}")
-    print(f"{CYAN}|{RESET} [7] {RED}← Back to Main Menu{RESET:<38}{RESET}")
+    print(f"{CYAN}|{RESET} [7] # of search results    → {YELLOW}{settings['search_results']}{RESET}")
+    print(f"{CYAN}|{RESET} [8] {RED}← Back to Main Menu{RESET:<38}{RESET}")
     print(f"{CYAN}+------------------------------------------------------+{RESET}")
     print(f"{CYAN}| Repo:{RESET} Visit https://github.com/sirsru/Artiscope     {CYAN}{RESET}")
     print(f"{CYAN}+------------------------------------------------------+{RESET}\n")
 
-    choice = input(f"{BOLD}{YELLOW}→ Select an option [1-7]: {RESET}").strip()
+    choice = input(f"{BOLD}{YELLOW}→ Select an option [1-8]: {RESET}").strip()
 
     if choice == '1':
         new_width = input(f"{CYAN}→ Enter new max ASCII width: {RESET}")
@@ -201,6 +202,9 @@ def display_settings_menu():
     elif choice == '6':
         settings["emoji"] = not settings["emoji"]
     elif choice == '7':
+        choice = input("how many search results should be shown")
+        settings["search_results"] = choice
+    elif choice == '8':
         return
     else:
         print(f"{RED}✗ Invalid choice. Try again.{RESET}")
@@ -219,6 +223,7 @@ def check_network():
     except requests.ConnectionError:
         return False
 
+# ------------------------------------ image to ascii ---------------------------------------------
 
 def generate_image_hash(image):
     img = image.convert("L")
@@ -378,10 +383,11 @@ def scrape_and_convert_images(url, max_width=settings['max_width']):
 
     return links_list
 
-def google_search(query, num_results=10):
+def google_search(query, num_results=settings["search_results"]):
+    global settings
     results = []
     try:
-        for url in search(query, num_results=num_results):
+        for url in search(query, num_results=int(settings["search_results"])):
             results.append(url)
 
         if results:
@@ -455,6 +461,8 @@ def info():
         download_latest_browser_py('https://github.com/sirsru/Artiscope', find_browser_py())
     elif choice == '2':
         get_latest_version_from_readme()
+
+# -------------------------------- most important functions -------------------------------------------------
 
 def interactive_browsing():
     print(f"{CYAN}Welcome to Artiscope the interactive Ascii internet browser!{RESET}")
