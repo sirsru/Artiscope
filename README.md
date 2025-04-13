@@ -93,7 +93,7 @@ After the original install all updates done to this repository can be done from 
 ----------------------
 The settings menu for Artiscope can be accessed from the main menu, in which you can change the ascii image resolution and size, allowed image formats, and similar image toggle.
 
-![image](https://github.com/user-attachments/assets/f04666f0-103f-4af8-baba-f788c8c8a40a)
+![image](https://github.com/user-attachments/assets/803ae639-adde-4ca9-86cf-5b10dac16c48)
 
 **How to use**
 ======================
