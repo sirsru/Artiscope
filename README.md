@@ -9,11 +9,11 @@ Table of contents
 -------------------
 [about](#About-Artiscope)<br>
 [examples](#examples)<br>
-[install](#install)
-[running Artiscope](#How-to-run)
-[settings](#settings)
-[how to use](#How-to-use)
-[updates](#updates)
+[install](#install)<br>
+[running Artiscope](#How-to-run)<br>
+[settings](#settings)<br>
+[how to use](#How-to-use)<br>
+[updates](#updates)<br>
 
 **About Artiscope**
 ======================
