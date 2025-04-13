@@ -1,4 +1,6 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg) ![Status](https://img.shields.io/badge/Stable-green.svg)
+Version 1.0.1
+
 
 **ARTISCOPE**
 ======================
