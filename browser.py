@@ -1,3 +1,6 @@
+from random import choice
+
+from Cython.Compiler.Visitor import PrintTree
 from bs4 import BeautifulSoup
 from PIL import Image
 from googlesearch import search
@@ -6,6 +9,8 @@ import io
 import os
 import hashlib
 import re
+
+from pygments.styles.paraiso_dark import GREEN
 
 logo = ''' 
 ░▒▓██████▓▒ ░▒▓███████▓▒ ▒▓████████▓▒ ▒▓█▓▒░ ▒▓███████▓▒ ░▒▓██████▓▒░ ░▒▓██████▓▒░ ▒▓███████▓▒░ ▒▓████████▓▒░ 
@@ -142,9 +147,12 @@ settings = {
     "check_similarity": True,
     "allowed_formats": ["PNG", "JPEG", "GIF", "BMP", "TIFF", "WEBP"],
     "themes": list(themes.keys()),  # Dynamically get theme names from the 'themes' dictionary
-    "current_theme": 0  # Default theme is the first one in the list
+    "current_theme": 0,  # Default theme is the first one in the list
+    "verbose_output": True,
+    "emoji": True
 }
 
+version = "Version 1.0.1"
 # Define color codes for different themes
 
 def apply_theme(theme_name):
@@ -154,39 +162,49 @@ def apply_theme(theme_name):
     RESET, BOLD, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, BLACK = theme.values()
 
 def display_settings_menu():
-    print(f"\n{CYAN}Settings{RESET}")
-    print(f"1. {GREEN}Set maximum width/resolution for ASCII art ({settings['max_width']}){RESET}")
-    print(f"2. {GREEN}Toggle image similarity check ({'Enabled' if settings['check_similarity'] else 'Disabled'}){RESET}")
-    print(f"3. {GREEN}Set allowed image formats ({', '.join(settings['allowed_formats'])}){RESET}")
-    print(f"4. {GREEN}Toggle themes ({settings['themes'][settings['current_theme']]} theme){RESET}")
-    print(f"5. {RED}Back to main menu{RESET}")
-    print("Go to https://github.com/sirsru/Artiscope for more help!")
-    choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
+    print(f"\n{BOLD}{CYAN}+------------------------------------------------------+{RESET}")
+    print(f"{BOLD}{CYAN}|              ✎ Artiscope ── Settings Menu              {RESET}")
+    print(f"{CYAN}+------------------------------------------------------+{RESET}")
+    print(f"{CYAN}|{RESET} [1] Max ASCII Width        → {YELLOW}{settings['max_width']:<30}{RESET}{RESET}")
+    print(f"{CYAN}|{RESET} [2] Similarity Check       → {YELLOW}{'Enabled' if settings['check_similarity'] else 'Disabled':<30}{RESET}{RESET}")
+    print(f"{CYAN}|{RESET} [3] Allowed Formats        → {YELLOW}{', '.join(settings['allowed_formats']):<30}{RESET}{RESET}")
+    print(f"{CYAN}|{RESET} [4] Current Theme          → {YELLOW}{settings['themes'][settings['current_theme']]:<30}{RESET}{RESET}")
+    print(f"{CYAN}|{RESET} [5] verbose output         → {YELLOW}{settings['verbose_output']}{RESET}{RESET}")
+    print(f"{CYAN}|{RESET} [6] Emoji support          → {YELLOW}{settings['emoji']}{RESET}{RESET}")
+    print(f"{CYAN}|{RESET} [7] {RED}← Back to Main Menu{RESET:<38}{RESET}")
+    print(f"{CYAN}+------------------------------------------------------+{RESET}")
+    print(f"{CYAN}| Repo:{RESET} Visit https://github.com/sirsru/Artiscope     {CYAN}{RESET}")
+    print(f"{CYAN}+------------------------------------------------------+{RESET}\n")
+
+    choice = input(f"{BOLD}{YELLOW}→ Select an option [1-7]: {RESET}").strip()
 
     if choice == '1':
-        new_width = input(f"{CYAN}Enter new maximum width for ASCII art: {RESET}")
+        new_width = input(f"{CYAN}→ Enter new max ASCII width: {RESET}")
         try:
             settings['max_width'] = int(new_width)
-            print(f"{GREEN}Max width set to {settings['max_width']}{RESET}")
+            print(f"{GREEN}✓ Max width set to {settings['max_width']}{RESET}")
         except ValueError:
-            print(f"{RED}Invalid input. Please enter a number.{RESET}")
+            print(f"{RED}✗ Invalid input. Please enter a number.{RESET}")
     elif choice == '2':
         settings['check_similarity'] = not settings['check_similarity']
-        print(f"{GREEN}Image similarity check {'enabled' if settings['check_similarity'] else 'disabled'}{RESET}")
+        print(f"{GREEN}✓ Similarity check {'enabled' if settings['check_similarity'] else 'disabled'}{RESET}")
     elif choice == '3':
-        new_formats = input(f"{CYAN}Enter allowed image formats (comma separated): {RESET}")
+        new_formats = input(f"{CYAN}→ Enter allowed formats (comma-separated): {RESET}")
         settings['allowed_formats'] = [fmt.strip().upper() for fmt in new_formats.split(',')]
-        print(f"{GREEN}Allowed image formats updated to {', '.join(settings['allowed_formats'])}{RESET}")
+        print(f"{GREEN}✓ Formats updated: {', '.join(settings['allowed_formats'])}{RESET}")
     elif choice == '4':
-        # Toggle themes
-        print(f"Current theme is: {settings['themes'][settings['current_theme']]}")
-        settings['current_theme'] = (settings['current_theme'] + 1) % len(settings['themes'])  # Cycle through themes
+        settings['current_theme'] = (settings['current_theme'] + 1) % len(settings['themes'])
         apply_theme(settings['themes'][settings['current_theme']])
-        print(f"{GREEN}Switched to {settings['themes'][settings['current_theme']]} theme{RESET}")
+        print(f"{GREEN}✓ Switched to theme: {settings['themes'][settings['current_theme']]}{RESET}")
     elif choice == '5':
+        settings["verbose_output"] = not settings["verbose_output"]
+    elif choice == '6':
+        settings["emoji"] = not settings["emoji"]
+    elif choice == '7':
         return
     else:
-        print(f"{RED}Invalid choice, try again.{RESET}")
+        print(f"{RED}✗ Invalid choice. Try again.{RESET}")
+
     display_settings_menu()
 
 
@@ -260,16 +278,16 @@ def image_to_ascii(image_url, max_width=settings['max_width'], previous_image_ha
         response = requests.get(image_url)
         img = Image.open(io.BytesIO(response.content))
 
-        if img.format not in settings["allowed_formats"]:
+        if img.format not in settings["allowed_formats"] and settings["verbose_output"]:
             print(f"{YELLOW}Skipping unsupported image format: {img.format} (URL: {image_url}){RESET}")
             return None, previous_image_hash
 
         current_image_hash = generate_image_hash(img)
-        if settings["check_similarity"] and previous_image_hash and current_image_hash == previous_image_hash:
+        if settings["check_similarity"] and settings["verbose_output"] and previous_image_hash and current_image_hash == previous_image_hash:
             print(f"{MAGENTA}Skipping similar image.{RESET}")
             return None, previous_image_hash
     except Exception as e:
-        print(f"{RED}Error fetching or opening image {image_url}: {e}{RESET}")
+        print(f"{RED}→ Error fetching or opening image {image_url}: {e}{RESET}")
         return None, previous_image_hash
 
     terminal_width = 100
@@ -279,7 +297,7 @@ def image_to_ascii(image_url, max_width=settings['max_width'], previous_image_ha
     img = img.resize((width, height))
     img = img.convert('RGB')
 
-    ascii_chars = "██▓▒░/=-:_. "
+    ascii_chars = "██▓▒░/=:_. "
     ascii_image = ""
     colored_ascii_art = []
 
@@ -369,29 +387,91 @@ def google_search(query, num_results=10):
         if results:
             return results
         else:
-            print(f"{RED}No results found for '{query}'. Please try again.{RESET}")
+            print(f"{RED}✗ No results found for '{query}'. Please try again.{RESET}")
             return []
 
     except Exception as e:
-        print(f"{RED}Error fetching Google search results: {e}{RESET}")
+        print(f"{RED} ✗ Error fetching Google search results: {e}{RESET}")
         return []
 
+# ------------------info and update definitions --------------------
+
+def find_browser_py(start_path='.'):
+    for root, _, files in os.walk(start_path):
+        if 'browser.py' in files:
+            return os.path.join(root, 'browser.py')
+    return None
+
+def download_latest_browser_py(repo_url, local_path):
+    raw_url = 'https://raw.githubusercontent.com/sirsru/Artiscope/refs/heads/main/browser.py'
+    response = requests.get(raw_url)
+    if response.status_code == 200:
+        with open(local_path, 'w', encoding='utf-8') as f:
+            f.write(response.text)
+        print(f'[✓] Replaced: {local_path}')
+    else:
+        print(f"{RED}[✗] Failed to download browser.py (HTTP {response.status_code}){RESET}")
+
+def get_latest_version_from_readme():
+    global version
+    url = "https://raw.githubusercontent.com/sirsru/Artiscope/main/README.md"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        readme_lines = response.text.strip().splitlines()
+        if len(readme_lines) >= 2:
+            version_line = readme_lines[1].strip()
+            print(f"[✓] Found version: {version_line}")
+            if version_line != version:
+                print(f"{RED}★ You should probably update!{RESET}")
+            else:
+                print(f"{GREEN}✓ You are up to date!{RESET}")
+            return version_line
+        else:
+            print("[✗] README.md is too short to contain a version line.")
+    else:
+        print(f"[✗] Failed to fetch README.md (HTTP {response.status_code})")
+
+    return None
+
+
+def info():
+    if settings["emoji"]:
+        print(f"\n{BLUE}+-------------------- ⚙️ Version info and updater --------------------+{RESET}")
+        print(f"{BLUE}|{RESET}📦 Release → {version}{RESET}")
+        print(f"{BLUE}|{RESET}1. 📥 Update by cloning github repo{RESET}")
+        print(f"{BLUE}|{RESET}2. 📡 Check for update ★ (recommended before update){RESET}")
+        print(f"{BLUE}|{RESET}3. ⬅️ {RED}Exit{RESET}")
+    else:
+        print(f"\n{BLUE}+-------------------- ⚙️ Version info and updater --------------------+{RESET}")
+        print(f"{BLUE}|{RESET}{version}{RESET}")
+        print(f"{BLUE}|{RESET}1. ↻ Update by cloning github repo (will replace current browser.py){RESET}")
+        print(f"{BLUE}|{RESET}2. ⏱ Check for update ★ (recommended before update){RESET}")
+        print(f"{BLUE}|{RESET}3. ⬅ {RED}Exit{RESET}")
+    print(f"{BLUE}+---------------------------------------------------------------------+{RESET}")
+    choice = input("choose option [1-3]")
+
+    if choice == '1':
+        download_latest_browser_py('https://github.com/sirsru/Artiscope', find_browser_py())
+    elif choice == '2':
+        get_latest_version_from_readme()
 
 def interactive_browsing():
     print(f"{CYAN}Welcome to Artiscope the interactive Ascii internet browser!{RESET}")
 
     if check_network():
-        print(f"{GREEN}You are connected to the internet!{RESET}")
+        print(f"{GREEN}✓ You are connected to the internet!{RESET}")
     else:
-        print(f"{RED}You are not connected to the internet!{RESET}")
+        print(f"{RED}✗ You are not connected to the internet!{RESET}")
 
     while True:
-        print(f"\n{BLUE}Main Menu{RESET}")
-        print(f"1. enter direct URL")
-        print(f"2. {CYAN}Search the internet{RESET}")
-        print(f"3. {CYAN}Settings{RESET}")
-        print(f"4. {RED}Exit{RESET}")
-
+        print(f"\n{BLUE}+-------------------- Main Menu --------------------+{RESET}")
+        print(f"{BLUE}|{RESET}1. enter direct URL")
+        print(f"{BLUE}|{RESET}2. {CYAN}Search the internet{RESET}")
+        print(f"{BLUE}|{RESET}3. {CYAN}Settings{RESET}")
+        print(f"{BLUE}|{RESET}4. {CYAN}Info and updates{RESET}")
+        print(f"{BLUE}|{RESET}5. {RED}Exit{RESET}")
+        print(f"{BLUE}+---------------------------------------------------+{RESET}")
         choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
 
         if choice == '1':
@@ -411,22 +491,25 @@ def interactive_browsing():
             display_settings_menu()
 
         elif choice == '4':
+            info()
+
+        elif choice == '5':
             print(f"{RED}Exiting the browser. Goodbye!{RESET}")
             break
         else:
-            print(f"{RED}Invalid choice.{RESET}")
+            print(f"{RED}✗ Invalid choice.{RESET}")
 
 
 def browsing_url(url):
     while True:
-        print(f"\n{BLUE}Now browsing: {url}{RESET}")
         links = scrape_and_convert_images(url)
-        print(f"\n{YELLOW}Options:{RESET}")
-        print(f"1. {GREEN}Go to link # {RESET}.")
-        print(f"2. {CYAN}Enter another URL{RESET}.")
-        print(f"3. {CYAN}Search for something{RESET}.")
-        print(f"4. {RED}Go back to Main Menu{RESET}")
-
+        print(f"\n{BLUE}Now browsing: {url}{RESET}")
+        print(f"\n{BLUE}+-------------------- Browse Menu --------------------+{RESET}")
+        print(f"{BLUE}|{RESET}1. {GREEN}Go to link # {RESET}.")
+        print(f"{BLUE}|{RESET}2. {CYAN}Enter another URL{RESET}.")
+        print(f"{BLUE}|{RESET}3. {CYAN}Search for something{RESET}.")
+        print(f"{BLUE}|{RESET}4. {RED}Go back to Main Menu{RESET}")
+        print(f"{BLUE}+-----------------------------------------------------+{RESET}")
         choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
 
         if choice == '1':
@@ -459,11 +542,12 @@ def browsing_url(url):
 
 
 def show_options_menu(results=None):
-    print(f"\n{YELLOW}Options:{RESET}")
-    print(f"1. {GREEN}Go to link # {RESET}.")
-    print(f"2. {CYAN}Enter another URL{RESET}.")
-    print(f"3. {CYAN}Search for something{RESET}.")
-    print(f"4. {RED}Go back to Main Menu{RESET}")
+    print(f"\n{BLUE}+-------------------- Options menu --------------------+{RESET}")
+    print(f"{BLUE}|{RESET}1. {GREEN}Go to link # {RESET}.")
+    print(f"{BLUE}|{RESET}2. {CYAN}Enter another URL{RESET}.")
+    print(f"{BLUE}|{RESET}3. {CYAN}Search for something{RESET}.")
+    print(f"{BLUE}|{RESET}4. {RED}Go back to Main Menu{RESET}")
+    print(f"{BLUE}+------------------------------------------------------+{RESET}")
 
     choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
 
