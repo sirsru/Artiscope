@@ -2,3 +2,5 @@ requests
 beautifulsoup4
 googlesearch-python
 Pillow
+pygments
+cython
