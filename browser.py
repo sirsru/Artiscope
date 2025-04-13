@@ -469,7 +469,7 @@ def interactive_browsing():
         print(f"{BLUE}|{RESET}1. enter direct URL")
         print(f"{BLUE}|{RESET}2. {CYAN}Search the internet{RESET}")
         print(f"{BLUE}|{RESET}3. {CYAN}Settings{RESET}")
-        print(f"{BLUE}|{RESET}4. {CYAN}Info and updates{RESET}")
+        print(f"{BLUE}|{RESET}4. {YELLOW}Info and updates{RESET}")
         print(f"{BLUE}|{RESET}5. {RED}Exit{RESET}")
         print(f"{BLUE}+---------------------------------------------------+{RESET}")
         choice = input(f"{GREEN}Enter your choice: {RESET}").strip()
