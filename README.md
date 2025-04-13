@@ -17,7 +17,7 @@ Table of contents
 
 **About Artiscope**
 ======================
-Artiscope is a python based ascii internet browser capable of rendering art from websites and allowing you to browse further through the website. This project is meant to be lightweight, with the ultimate goal being able to use a browser on a pi zero at a fast speed with a useable interface and results!
+Artiscope is a python based ascii internet browser capable of rendering art from websites and allowing you to browse further through the website. This project is meant to be lightweight, with the ultimate goal being able to use a browser on a pi zero at a fast speed with a useable interface and results! This feature rich browser even comes with a built in update manager that automatically downloads the newest version of the browser!
 
 ![image](https://github.com/user-attachments/assets/8430fcc7-1009-4a51-a8d7-aacc595f3c37)
 
@@ -123,4 +123,4 @@ The settings menu for Artiscope can be accessed from the main menu, in which you
 
 **updates**
 ======================
-Last but not least we have the updates! There is a built in option to update or check if you are up to date in Artiscope! All you have to do to install a new update is go to **info and updates** and choose **Update by cloning github repo** or **Check for update**
+Last but not least we have the updates! There is a built in option to update or check if you are up to date in Artiscope! All you have to do to install a new update is go to **info and updates** and choose **Update by cloning github repo** or **Check for update**. You do need to be connected to the internet to update the browser, but lets be honest, what are you using a browser for without internet?
