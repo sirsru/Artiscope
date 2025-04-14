@@ -61,7 +61,8 @@ Simple way
 Now after I Had to install everything multiple times it got pretty annoying, so I made launch files for this browser, I dont know why anyone would use it on windows but thats here too.
 
 >*MacOS or Linux*
->launch the browser using launch.sh
+>launch the browser using launch.sh <br>
+>**Make sure to make the file an executable file!**
 
 >*Windows*
 >launch browser using launch.bat
