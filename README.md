@@ -38,21 +38,18 @@ websites in this order:
 
 ***github***
 -------------------
-![image](https://github.com/user-attachments/assets/2b1ccce0-c19d-492e-9aa5-fa0183bdd2c7)
-![image](https://github.com/user-attachments/assets/eaa1fd75-92dd-4f68-928d-3ee7ae229ae7)
-
-
+<img src="https://github.com/user-attachments/assets/2b1ccce0-c19d-492e-9aa5-fa0183bdd2c7" width="400">
+<img src="https://github.com/user-attachments/assets/eaa1fd75-92dd-4f68-928d-3ee7ae229ae7" width="400">
 
 ***python.org***
 ---------------------
-![image](https://github.com/user-attachments/assets/4879321e-7eab-43c8-ac4b-12998aadbd1b)
-![image](https://github.com/user-attachments/assets/4363a0d5-f0a2-44d2-b398-aa235caff0e2)
-
+<img src="https://github.com/user-attachments/assets/4879321e-7eab-43c8-ac4b-12998aadbd1b" width="400">
+<img src="https://github.com/user-attachments/assets/4363a0d5-f0a2-44d2-b398-aa235caff0e2" width="300">
 
 
 ***newgrounds.com***
 ---------------------
-![image](https://github.com/user-attachments/assets/13237c89-90a2-4e64-ab5f-372c1c82200f)
+<img src="https://github.com/user-attachments/assets/13237c89-90a2-4e64-ab5f-372c1c82200f" width="300">
 
 
 **install**
