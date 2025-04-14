@@ -212,7 +212,7 @@ def display_settings_menu():
     display_settings_menu()
 
 
-# Initialize with the default theme
+
 apply_theme(settings["themes"][settings["current_theme"]])
 
 def check_network():
@@ -230,7 +230,7 @@ from PIL import Image
 import io
 import os
 
-# Custom headers for mimicking a real browser
+
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
@@ -454,30 +454,27 @@ def get_latest_version_from_readme():
     return None
 
 def info():
-    while True:
-        if settings["emoji"]:
-            print(f"\n{BLUE}+-------------------- ⚙️ Version info and updater --------------------+{RESET}")
-            print(f"{BLUE}|{RESET}📦 Release → {version}{RESET}")
-            print(f"{BLUE}|{RESET}1. 📥 Update by cloning github repo{RESET}")
-            print(f"{BLUE}|{RESET}2. 📡 Check for update ★ (recommended before update){RESET}")
-            print(f"{BLUE}|{RESET}3. ⬅️ {RED}Exit{RESET}")
-        else:
-            print(f"\n{BLUE}+-------------------- ⚙️ Version info and updater --------------------+{RESET}")
-            print(f"{BLUE}|{RESET}{version}{RESET}")
-            print(f"{BLUE}|{RESET}1. ↻ Update by cloning github repo (will replace current browser.py){RESET}")
-            print(f"{BLUE}|{RESET}2. ⏱ Check for update ★ (recommended before update){RESET}")
-            print(f"{BLUE}|{RESET}3. ⬅ {RED}Exit{RESET}")
-        print(f"{BLUE}+---------------------------------------------------------------------+{RESET}")
-        choice = input("choose option [1-3]")
-    
-        if choice == '1':
-            download_latest_browser_py('https://github.com/sirsru/Artiscope', find_browser_py())
-        elif choice == '2':
-            get_latest_version_from_readme()
-        elif choice == '3':
-            break
+    if settings["emoji"]:
+        print(f"\n{BLUE}+-------------------- ⚙️ Version info and updater --------------------+{RESET}")
+        print(f"{BLUE}|{RESET}📦 Release → {version}{RESET}")
+        print(f"{BLUE}|{RESET}1. 📥 Update by cloning github repo{RESET}")
+        print(f"{BLUE}|{RESET}2. 📡 Check for update ★ (recommended before update){RESET}")
+        print(f"{BLUE}|{RESET}3. ⬅️ {RED}Exit{RESET}")
+    else:
+        print(f"\n{BLUE}+-------------------- ⚙️ Version info and updater --------------------+{RESET}")
+        print(f"{BLUE}|{RESET}{version}{RESET}")
+        print(f"{BLUE}|{RESET}1. ↻ Update by cloning github repo (will replace current browser.py){RESET}")
+        print(f"{BLUE}|{RESET}2. ⏱ Check for update ★ (recommended before update){RESET}")
+        print(f"{BLUE}|{RESET}3. ⬅ {RED}Exit{RESET}")
+    print(f"{BLUE}+---------------------------------------------------------------------+{RESET}")
+    choice = input("choose option [1-3]")
 
-# -------------------------------- most important functions -------------------------------------------------
+    if choice == '1':
+        download_latest_browser_py('https://github.com/sirsru/Artiscope', find_browser_py())
+    elif choice == '2':
+        get_latest_version_from_readme()
+
+# -------------------------------- putting everything together  -------------------------------------------------
 
 def interactive_browsing():
     print(f"{CYAN}Welcome to Artiscope the interactive Ascii internet browser!{RESET}")
