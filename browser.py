@@ -153,7 +153,7 @@ settings = {
     "search_results": 10
 }
 
-version = "Version 1.0.2"
+version = "Version 1.0.3"
 
 def apply_theme(theme_name):
     global RESET, BOLD, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, BLACK
@@ -224,6 +224,19 @@ def check_network():
         return False
 
 # ------------------------------------ image to ascii ---------------------------------------------
+import requests
+from bs4 import BeautifulSoup
+from PIL import Image
+import io
+import os
+
+# Custom headers for mimicking a real browser
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Connection": "keep-alive"
+}
 
 def generate_image_hash(image):
     img = image.convert("L")
@@ -232,7 +245,6 @@ def generate_image_hash(image):
     avg_pixel_value = sum(pixels) / len(pixels)
     img_hash = ''.join(['1' if p > avg_pixel_value else '0' for p in pixels])
     return img_hash
-
 
 def rgb_to_terminal_color(r, g, b):
     if r < 85:
@@ -261,26 +273,21 @@ def rgb_to_terminal_color(r, g, b):
 def scrape_and_output_text(url):
     if not url.lower().startswith(('http://', 'https://')):
         url = 'https://' + url
-
     try:
-        response = requests.get(url, allow_redirects=True)
+        response = requests.get(url, headers=headers, allow_redirects=True)
         final_url = response.url
     except requests.exceptions.RequestException as e:
         print(f"{RED}Error fetching page {url}: {e}{RESET}")
         return
-
     print(f"{CYAN}Page redirected to: {final_url}{RESET}")
-
     soup = BeautifulSoup(response.text, 'html.parser')
-
     text_content = soup.get_text(separator="\n", strip=True)
-
     print(f"\n{WHITE}{text_content}{RESET}")
 
 
 def image_to_ascii(image_url, max_width=settings['max_width'], previous_image_hash=None):
     try:
-        response = requests.get(image_url)
+        response = requests.get(image_url, headers=headers)
         img = Image.open(io.BytesIO(response.content))
 
         if img.format not in settings["allowed_formats"] and settings["verbose_output"]:
@@ -292,7 +299,8 @@ def image_to_ascii(image_url, max_width=settings['max_width'], previous_image_ha
             print(f"{MAGENTA}Skipping similar image.{RESET}")
             return None, previous_image_hash
     except Exception as e:
-        print(f"{RED}→ Error fetching or opening image {image_url}: {e}{RESET}")
+        if settings["verbose_output"]:
+            print(f"{RED}→ Error fetching or opening image {image_url}: {e}{RESET}")
         return None, previous_image_hash
 
     terminal_width = 100
@@ -318,14 +326,13 @@ def image_to_ascii(image_url, max_width=settings['max_width'], previous_image_ha
     return ascii_image, current_image_hash
 
 
-
-
 def scrape_and_convert_images(url, max_width=settings['max_width']):
+    global settings
     if not url.lower().startswith(('http://', 'https://')):
         url = 'https://' + url
 
     try:
-        response = requests.get(url, allow_redirects=True)
+        response = requests.get(url, headers=headers, allow_redirects=True)
         final_url = response.url
     except requests.exceptions.RequestException as e:
         print(f"{RED}Error fetching page {url}: {e}{RESET}")
@@ -348,7 +355,8 @@ def scrape_and_convert_images(url, max_width=settings['max_width']):
         if img_url:
             if not img_url.startswith(('http://', 'https://')):
                 img_url = final_url + img_url
-            print(f"{CYAN}Converting image: {img_url}{RESET}")
+            if settings["verbose_output"]:
+                print(f"{CYAN}Converting image: {img_url}{RESET}")
             ascii_art, previous_image_hash = image_to_ascii(img_url, settings['max_width'], previous_image_hash)
             if ascii_art:
                 print(f"{MAGENTA}ASCII Art for {img_url}:\n{RESET}")
@@ -384,8 +392,10 @@ def scrape_and_convert_images(url, max_width=settings['max_width']):
     return links_list
 
 def google_search(query, num_results=settings["search_results"]):
+
     global settings
     results = []
+
     try:
         for url in search(query, num_results=int(settings["search_results"])):
             results.append(url)
@@ -410,7 +420,7 @@ def find_browser_py(start_path='.'):
 
 def download_latest_browser_py(repo_url, local_path):
     raw_url = 'https://raw.githubusercontent.com/sirsru/Artiscope/refs/heads/main/browser.py'
-    response = requests.get(raw_url)
+    response = requests.get(raw_url, headers=headers)
     if response.status_code == 200:
         with open(local_path, 'w', encoding='utf-8') as f:
             f.write(response.text)
@@ -421,7 +431,7 @@ def download_latest_browser_py(repo_url, local_path):
 def get_latest_version_from_readme():
     global version
     url = "https://raw.githubusercontent.com/sirsru/Artiscope/main/README.md"
-    response = requests.get(url)
+    response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
         readme_lines = response.text.strip().splitlines()
@@ -429,8 +439,11 @@ def get_latest_version_from_readme():
             version_line = readme_lines[1].strip()
             print(f"[✓] Found version: {version_line}")
             if version_line != version:
+
                 print(f"{RED}★ You should probably update!{RESET}")
+
             else:
+
                 print(f"{GREEN}✓ You are up to date!{RESET}")
             return version_line
         else:
@@ -439,7 +452,6 @@ def get_latest_version_from_readme():
         print(f"[✗] Failed to fetch README.md (HTTP {response.status_code})")
 
     return None
-
 
 def info():
     if settings["emoji"]:
