@@ -58,6 +58,23 @@ websites in this order:
 **install**
 ===============
 
+Simple way
+------------
+
+Now after I Had to install everything multiple times it got pretty annoying, so I made launch files for this browser, I dont know why anyone would use it on windows but thats here too.
+
+>*MacOS or Linux*
+>launch the browser using launch.sh
+
+>*Windows*
+>launch browser using launch.bat
+
+
+Hard way
+-----------
+
+If you dont trust my **.bat** and **.sh** files you can just DIY the setup and launch process.
+
 To install and use Artiscope you need to run these commands.
 ```
 git clone https://github.com/sirsru/Artiscope.git
