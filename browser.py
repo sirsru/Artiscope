@@ -454,25 +454,28 @@ def get_latest_version_from_readme():
     return None
 
 def info():
-    if settings["emoji"]:
-        print(f"\n{BLUE}+-------------------- ⚙️ Version info and updater --------------------+{RESET}")
-        print(f"{BLUE}|{RESET}📦 Release → {version}{RESET}")
-        print(f"{BLUE}|{RESET}1. 📥 Update by cloning github repo{RESET}")
-        print(f"{BLUE}|{RESET}2. 📡 Check for update ★ (recommended before update){RESET}")
-        print(f"{BLUE}|{RESET}3. ⬅️ {RED}Exit{RESET}")
-    else:
-        print(f"\n{BLUE}+-------------------- ⚙️ Version info and updater --------------------+{RESET}")
-        print(f"{BLUE}|{RESET}{version}{RESET}")
-        print(f"{BLUE}|{RESET}1. ↻ Update by cloning github repo (will replace current browser.py){RESET}")
-        print(f"{BLUE}|{RESET}2. ⏱ Check for update ★ (recommended before update){RESET}")
-        print(f"{BLUE}|{RESET}3. ⬅ {RED}Exit{RESET}")
-    print(f"{BLUE}+---------------------------------------------------------------------+{RESET}")
-    choice = input("choose option [1-3]")
-
-    if choice == '1':
-        download_latest_browser_py('https://github.com/sirsru/Artiscope', find_browser_py())
-    elif choice == '2':
-        get_latest_version_from_readme()
+    while True:
+        if settings["emoji"]:
+            print(f"\n{BLUE}+-------------------- ⚙️ Version info and updater --------------------+{RESET}")
+            print(f"{BLUE}|{RESET}📦 Release → {version}{RESET}")
+            print(f"{BLUE}|{RESET}1. 📥 Update by cloning github repo{RESET}")
+            print(f"{BLUE}|{RESET}2. 📡 Check for update ★ (recommended before update){RESET}")
+            print(f"{BLUE}|{RESET}3. ⬅️ {RED}Exit{RESET}")
+        else:
+            print(f"\n{BLUE}+-------------------- ⚙️ Version info and updater --------------------+{RESET}")
+            print(f"{BLUE}|{RESET}{version}{RESET}")
+            print(f"{BLUE}|{RESET}1. ↻ Update by cloning github repo (will replace current browser.py){RESET}")
+            print(f"{BLUE}|{RESET}2. ⏱ Check for update ★ (recommended before update){RESET}")
+            print(f"{BLUE}|{RESET}3. ⬅ {RED}Exit{RESET}")
+        print(f"{BLUE}+---------------------------------------------------------------------+{RESET}")
+        choice = input("choose option [1-3]")
+    
+        if choice == '1':
+            download_latest_browser_py('https://github.com/sirsru/Artiscope', find_browser_py())
+        elif choice == '2':
+            get_latest_version_from_readme()
+        elif choice == '3':
+            break
 
 # -------------------------------- most important functions -------------------------------------------------
 
